@@ -1,5 +1,4 @@
-# PORTFOLIO
-A personal portfolio website showcasing my projects, skills, and passion for development.
+
 # Portfolio 
 
 A personal portfolio website showcasing my projects, skills, and passion for development.
