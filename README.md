@@ -19,6 +19,6 @@ A personal portfolio website showcasing my projects, skills, and passion for dev
 This portfolio is created to showcase my work and learning journey as a developer.
 
 ## 📬 Contact
-- GitHub: your-username
-- LinkedIn: your-link
+- GitHub: dipanshupatidar123321
+- LinkedIn:https://www.linkedin.com/in/dipanshu-patidar-035b60381?utm_source=share_via&utm_content=profile&utm_medium=member_android
 
