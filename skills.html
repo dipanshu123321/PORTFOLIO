@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Skills — Dipanshu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: #f8fafc; color: #0f1724; }
+    .wrap { max-width: 1100px; margin: 3.25rem auto; padding: 0 1rem; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .brand { font-weight:700; font-size:1.125rem; color:#4f46e5; }
+
+    /* Grid */
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(96px,1fr)); gap:1.1rem; margin-top:1.5rem; }
+    .skill { background:white; border-radius:12px; padding:1rem; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(2,6,23,0.06); transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease; }
+    .skill img { width:52px; height:52px; object-fit:contain; display:block; }
+    .skill-name { margin-top:0.6rem; font-size:0.9rem; color:#374151; text-align:center; }
+
+    /* Support manual theme toggling using body.dark-mode (sync with index.html) */
+    body.dark-mode { background:#071021; color:#e6eef8; }
+    body.dark-mode .skill { background:#071726; box-shadow:0 6px 18px rgba(2,6,23,0.3); }
+    body.dark-mode .back { color:#e6eef8; border-color: rgba(255,255,255,0.06); }
+    body.dark-mode .skill-name { color:#9fb0cc; }
+    .skill:hover { transform: translateY(-8px) scale(1.03); box-shadow:0 26px 60px rgba(2,6,23,0.12); }
+
+    /* Neon accent for selected skills */
+    .skill.neon { box-shadow:0 10px 30px rgba(124,58,237,0.12), 0 0 30px rgba(99,102,241,0.06); }
+
+    /* Reveal */
+    .reveal { opacity:0; transform:translateY(12px) scale(.995); transition:opacity .64s ease, transform .64s cubic-bezier(.2,.9,.2,1); }
+    .reveal.in-view { opacity:1; transform:translateY(0) scale(1); }
+
+    /* CTA */
+    .back { display:inline-flex; gap:.6rem; align-items:center; padding:.5rem .9rem; border-radius:.6rem; background:transparent; color:#374151; border:1px solid rgba(15,23,36,0.06); }
+
+    footer { text-align:center; margin-top:2.5rem; color:#6b7280; font-size:.95rem; }
+
+    @media (prefers-color-scheme:dark) {
+      body { background:#071021; color:#e6eef8; }
+      .skill { background:#071726; box-shadow:0 6px 18px rgba(2,6,23,0.3); }
+      .back { color:#e6eef8; border-color: rgba(255,255,255,0.06); }
+      .skill-name { color:#9fb0cc; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Dipanshu — Skills</div>
+      <nav class="">
+        <a class="back" href="index.html">← Back to Portfolio</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1 class="text-2xl font-bold mt-6">My Technical Skills</h1>
+      <p class="mt-2 text-gray-600">Logos below are interactive — hover or tap to animate. Built for quick recruiter skim.</p>
+
+      <div class="skills-grid" id="skillsGrid">
+        <!-- Use popular devicon CDN logos with visible names for recruiters -->
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+          <div class="skill-name">HTML5</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+          <div class="skill-name">CSS3</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+          <div class="skill-name">JavaScript</div>
+        </div>
+        <div class="skill reveal neon" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+          <div class="skill-name">React</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+          <div class="skill-name">Node.js</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+          <div class="skill-name">GitHub</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+          <div class="skill-name">Python</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+          <div class="skill-name">Docker</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
+          <div class="skill-name">TypeScript</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <!-- Use a more reliable CDN for Tailwind logo to improve mobile support -->
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tailwindcss.svg" alt="Tailwind CSS">
+          <div class="skill-name">Tailwind CSS</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" alt="Flutter">
+          <div class="skill-name">Flutter</div>
+        </div>
+        <div class="skill reveal" data-reveal>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+          <div class="skill-name">Figma</div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <p class="text-gray-600">Tip: on mobile tap a logo to highlight it.</p>
+      </div>
+    </main>
+
+    <footer>
+      © 2025 Dipanshu Patidar — <a href="mailto:Farmingtips528@gmail.com">Farmingtips528@gmail.com</a>
+    </footer>
+  </div>
+
+  <script>
+    // Reveal on scroll
+    (function(){
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }});
+      }, {threshold:0.12});
+      document.querySelectorAll('[data-reveal]').forEach(el=>obs.observe(el));
+    })();
+
+    // Tap-to-highlight on mobile
+    document.getElementById('skillsGrid').addEventListener('click', e=>{
+      const s = e.target.closest('.skill');
+      if(!s) return;
+      s.classList.toggle('neon');
+      setTimeout(()=> s.classList.remove('neon'), 2200);
+    });
+
+    // Theme sync: apply theme from localStorage and listen for storage events
+    function applyTheme(theme){
+      if(theme === 'dark') document.body.classList.add('dark-mode');
+      else document.body.classList.remove('dark-mode');
+    }
+
+    // initialize from storage or system preference
+    (function(){
+      let saved = null;
+      try { saved = localStorage.getItem('theme'); } catch(e) { saved = null; }
+      if(saved === 'dark' || saved === 'light') { applyTheme(saved); }
+      else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark ? 'dark' : 'light');
+      }
+    })();
+
+    // update if theme changes in another tab/page
+    window.addEventListener('storage', (e)=>{
+      if(e.key === 'theme') applyTheme(e.newValue);
+    });
+  </script>
+</body>
+</html>
