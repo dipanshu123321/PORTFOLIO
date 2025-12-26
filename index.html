@@ -3,629 +3,420 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dipanshu | Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* Smooth fade animation */
-    .fade-in {
-      animation: fadeIn 0.6s ease-in-out;
+    /* ===== BASIC ===== */
+    html { scroll-behavior: smooth; font-size: 15px; }
+    body { overflow-x: hidden; }
+
+    /* Theme variables (used by overrides below) */
+    :root {
+      --bg-page: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0f1724;
+      --muted: #6b7280;
+      --accent: #6366f1;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 480px) {
+      html { font-size: 14px; }
     }
 
-    /* Navbar dark-mode styling (use !important to override Tailwind utilities) */
+    /* ===== DARK NAV ===== */
     .nav-dark {
-      background: linear-gradient(90deg, #0b1220 0%, #0f1724 100%) !important;
-      background-image: linear-gradient(90deg, #0b1220 0%, #0f1724 100%) !important;
-      box-shadow: 0 6px 18px rgba(2,6,23,0.6) !important;
-      transition: background 250ms ease, box-shadow 250ms ease;
+      background: linear-gradient(90deg, #0b1220, #0f1724) !important;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.6);
     }
+    .nav-dark a, .nav-dark .brand { color: #e6eef8 !important; }
 
-    .nav-dark .brand, .nav-dark a, .nav-dark button {
-      color: #e6eef8 !important;
-    }
-
-    /* Ensure mobile menu also uses dark background and text */
-    .nav-dark .mobile-menu,
-    .mobile-menu {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important;
-      color: #e6eef8 !important;
-    }
-
-    /* Mobile menu: ensure clear light-mode colors and hover visibility */
-    body:not(.dark-mode) .mobile-menu {
-      background: #ffffff !important;
-      color: #374151 !important; /* text-gray-700 */
-    }
-
-    body:not(.dark-mode) .mobile-menu a {
-      color: #374151 !important;
-    }
-
-    body:not(.dark-mode) .mobile-menu a:hover {
-      background-color: #e5e7eb !important; /* gray-200 */
-      color: #111827 !important; /* text-gray-900 for contrast */
-    }
-
-    /* Global dark-mode (makes the whole page dark) */
+    /* ===== DARK MODE OVERRIDES ===== */
     body.dark-mode {
-      background: #071021 !important;
-      color: #e6eef8 !important;
-      transition: background 250ms ease, color 250ms ease;
+      background: #071021;
+      color: #e6eef8;
     }
 
-    .dark-mode .bg-white { background-color: #0b1220 !important; }
-    .dark-mode .bg-gray-100 { background-color: #071021 !important; }
-    .dark-mode .bg-gray-50 { background-color: #071021 !important; }
-    .dark-mode .text-gray-600 { color: #cbd5e1 !important; }
-    .dark-mode .text-gray-500 { color: #94a3b8 !important; }
-    .dark-mode .border-gray-50 { border-color: rgba(255,255,255,0.06) !important; }
-    .dark-mode .text-gray-800 { color: #e6eef8 !important; }
-    .dark-mode .text-gray-900 { color: #e6eef8 !important; }
-    .dark-mode .text-gray-700 { color: #cbd5e1 !important; }
-    .dark-mode .rounded-2xl.shadow-xl { box-shadow: 0 10px 30px rgba(2,6,23,0.6) !important; }
-    .dark-mode .border-white { border-color: rgba(255,255,255,0.06) !important; }
-    .dark-mode .brand { color: #e6eef8 !important; }
-    .dark-mode a:hover { opacity: 0.95; }
-    .dark-mode .hover\:bg-gray-200:hover { background-color: rgba(255,255,255,0.03) !important; }
-    .dark-mode .mobile-menu { background: transparent; color: #e6eef8; }
+    /* Override common Tailwind bg/text utility classes for dark mode (mobile-focused)
+       Using !important to ensure our custom palette wins over Tailwind utilities. */
+    body.dark-mode .bg-white { background-color: #071726 !important; }
+    body.dark-mode .bg-gray-100 { background-color: #071726 !important; }
+    body.dark-mode .bg-gray-50 { background-color: #05131d !important; }
+    body.dark-mode .bg-gray-900 { background-color: #020617 !important; }
 
-    /* (contact form dark-mode styles removed) */
+    body.dark-mode .text-gray-700,
+    body.dark-mode .text-gray-600,
+    body.dark-mode .text-gray-900 { color: #c9d7ea !important; }
 
-    /* Contact block styling (light + dark) */
-    .footer-contact { color: #374151; }
-    .footer-contact a { color: #4f46e5; text-decoration: none; }
-    .footer-contact .muted { color: #6b7280; }
+    body.dark-mode .brand { color: #e6eef8 !important; }
+    body.dark-mode footer { background: #020617 !important; color: #9fb0cc !important; }
 
-    /* Dark-mode adjustments for the footer/contact area */
-    .dark-mode .footer-contact { color: #cbd5e1 !important; }
-    .dark-mode .footer-contact a { color: #93c5fd !important; }
-    .dark-mode footer { background: #071021 !important; }
-
-    /* Dark-mode rules for the main contact section (id="contact") */
-    .dark-mode #contact { background: #071021 !important; color: #e6eef8 !important; }
-    .dark-mode #contact .bg-gray-100 { background-color: #07121a !important; }
-    .dark-mode #contact .text-gray-600 { color: #cbd5e1 !important; }
-    .dark-mode #contact a { color: #93c5fd !important; }
-
-    /* Small visual niceties for the toggle */
-    #theme-toggle {
-      transition: transform 160ms ease, opacity 160ms ease;
+    /* Mobile floating theme toggle */
+    .mobile-theme-toggle {
+      position: fixed;
+      right: 1rem;
+      bottom: 1.25rem;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.2);
+      background: #6366f1;
+      color: white;
+      font-size: 1.1rem;
     }
 
-    #theme-toggle:active { transform: scale(0.95); }
+    .mobile-theme-toggle:active { transform: scale(.98); }
 
-    /* Wiggle animation for attention-grabbing nav items (3 times per second) */
-    @keyframes wiggle {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-1px); }
-      75% { transform: translateX(1px); }
-      100% { transform: translateX(0); }
-    }
-
-    .wiggle {
-      display: inline-block;
-      animation-name: wiggle;
-      animation-duration: 0.333s; /* ~3 cycles per second */
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
+    /* Profile photo hover effect */
+    .me-photo {
+      transition: transform .36s cubic-bezier(.2,.9,.2,1), box-shadow .36s ease;
       will-change: transform;
     }
+    .me-photo:hover {
+      transform: translateY(-8px) rotate(-1deg) scale(1.05);
+      box-shadow: 0 18px 40px rgba(2,6,23,0.35);
+    }
+    body.dark-mode .me-photo { border-color: rgba(255,255,255,0.08) !important; }
 
-    /* Navbar link hover border */
-    nav a:hover {
-      border-bottom: 2px solid #4f46e5;
-      transition: border 0.3s ease;
+    /* Neon glow styles */
+    @keyframes neon-pulse {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(124,58,237,0.85)); }
+      50% { filter: drop-shadow(0 0 18px rgba(99,102,241,0.9)); }
+    }
+    .neon {
+      box-shadow: 0 0 8px rgba(124,58,237,0.85), 0 0 20px rgba(99,102,241,0.45);
+      transition: box-shadow .28s ease, transform .28s cubic-bezier(.2,.9,.2,1);
+    }
+    .neon:hover { box-shadow: 0 6px 28px rgba(124,58,237,0.95), 0 0 56px rgba(99,102,241,0.6); transform: translateY(-6px) scale(1.03); }
+
+    .neon-text { color: #7c3aed !important; text-shadow: 0 0 6px rgba(124,58,237,0.95), 0 0 18px rgba(99,102,241,0.6); }
+    .neon-text.animated { animation: neon-pulse 2.6s ease-in-out infinite; }
+
+    /* Ensure brand is readable in light mode (override neon color when not dark) */
+    body:not(.dark-mode) .brand.neon-text {
+      color: #ffffff !important;
+      text-shadow: 0 2px 10px rgba(15,23,36,0.45) !important;
     }
 
-    /* Dark mode hover border */
-    .dark-mode nav a:hover {
-      border-bottom-color: #93c5fd;
+    /* Theme switch styles (desktop + mobile) */
+    .theme-switch {
+      align-items: center;
+      gap: 0.4rem;
+      padding: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.18);
+      display: inline-flex;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+      transition: background .24s ease, box-shadow .24s ease, transform .12s ease;
     }
+    .theme-switch .sun, .theme-switch .moon { font-size: 0.95rem; line-height: 1; opacity: 0.95; color: #0f1724; }
+    .theme-switch .switch-knob {
+      width: 1.6rem; height: 1.6rem; border-radius: 9999px; background: #0f1724; display: inline-block;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.12); transform: translateX(0);
+      transition: transform .28s cubic-bezier(.2,.9,.2,1), background .24s ease, box-shadow .24s ease;
+    }
+    /* Dark state keeps bright knob and gradient */
+    .theme-switch.is-dark { background: linear-gradient(90deg,#4f46e5,#06b6d4); }
+    .theme-switch.is-dark .switch-knob { transform: translateX(1.2rem); background: #ffffff; box-shadow: 0 8px 26px rgba(79,70,229,0.28); }
+    .theme-switch.is-dark .sun, .theme-switch.is-dark .moon { color: #ffffff; }
+
+    /* Slight border in light mode to improve contrast on gradient nav */
+    body:not(.dark-mode) nav .theme-switch { border: 1px solid rgba(255,255,255,0.12); }
+
+    /* Smaller mobile variant (keeps position styling from .mobile-theme-toggle) */
+    .mobile-theme-toggle.theme-switch { width: auto; height: auto; padding: 6px; font-size: 0.95rem; }
+
+    .theme-switch:active { transform: scale(.98); }
+
+    /* Navbar link hover (desktop) */
+    nav .nav-link {
+      color: inherit;
+      padding: .28rem .5rem;
+      border-radius: .5rem;
+      transition: color .18s ease, transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease;
+      display: inline-block;
+    }
+    nav .nav-link:hover {
+      transform: translateY(-3px);
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(99,102,241,0.12);
+    }
+
+    /* Mobile menu links */
+    #mobile-menu .mobile-nav-link {
+      transition: background .14s ease, color .14s ease !important;
+      border-radius: .375rem;
+    }
+    #mobile-menu .mobile-nav-link:hover,
+    #mobile-menu .mobile-nav-link:active {
+      background: rgba(99,102,241,0.08);
+      color: #111827;
+    }
+    body.dark-mode #mobile-menu .mobile-nav-link:hover,
+    body.dark-mode #mobile-menu .mobile-nav-link:active {
+      background: rgba(99,102,241,0.12);
+      color: #e6eef8;
+    }
+
+    /* ===== MOBILE PERFORMANCE MODE ===== */
+    @media (max-width: 768px) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+      *:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    /* Re-enable transitions specifically for navbar links and mobile toggle on small screens */
+    @media (max-width: 768px) {
+      nav .nav-link, #mobile-menu .mobile-nav-link, .mobile-theme-toggle {
+        transition: color .18s ease !important; 
+        transition: background .14s ease !important; 
+        transition: transform .12s ease !important;
+      }
+    }
+
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(10px) scale(.995); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1); }
+    .reveal.in-view { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* CTA button */
+    .btn-cta { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem .9rem; border-radius: .6rem; background: linear-gradient(90deg,#7c3aed,#06b6d4); color: white; font-weight: 600; box-shadow: 0 12px 30px rgba(99,102,241,0.16); transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease; }
+    .btn-cta:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(99,102,241,0.2); }
+    body.dark-mode .btn-cta { background: linear-gradient(90deg,#06b6d4,#7c3aed); }
+
+    /* Project card hover */
+    .card-hover { transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease; border-radius: .9rem; }
+    .card-hover:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 28px 60px rgba(2,6,23,0.12); }
+
+    /* Skill icon hover */
+    .skill-icon { transition: transform .2s ease, filter .2s ease; display:inline-block; }
+    .skill-icon:hover { transform: translateY(-6px) scale(1.12); filter: drop-shadow(0 10px 24px rgba(99,102,241,0.22)); }
+
+    /* Brand subtle entrance */
+    .brand-entrance { transform-origin: center; animation: brand-pop .9s cubic-bezier(.2,.9,.2,1) both; }
+    @keyframes brand-pop { from { transform: scale(.9) translateY(-4px); opacity: 0 } to { transform: scale(1) translateY(0); opacity: 1 } }
   </style>
 </head>
 
 <body class="bg-gray-100">
 
- 
+<!-- ================= NAVBAR ================= -->
+<nav class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 fixed w-full z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex items-center justify-between h-14 md:h-16">
 
-  <style>
-    /* Ensure anchored sections are visible under the fixed navbar */
-    .section { scroll-margin-top: 5rem; }
-  </style>
-
-  <style>
-    /* Smooth scrolling for anchor links */
-    html { scroll-behavior: smooth; }
-  </style>
-
-  <!-- NAVBAR -->
-  <nav class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        
-        <!-- Logo / Brand -->
-        <div class="flex-shrink-0 brand text-white font-bold text-2xl tracking-wide">
-          Dipanshu.dev
-        </div>
-
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex space-x-8 text-white font-medium">
-          <a href="#home" class="hover:text-gray-200 transition-all duration-300"  onclick="navClicked = true">Home</a>
-          <a href="#about" class="hover:text-gray-200 transition-all duration-300"  onclick="navClicked = true">About Me</a>
-          <a href="#projects" class="hover:text-gray-200 transition-all duration-300"  onclick="navClicked = true">My Projects</a>
-          <a href="#education" class="hover:text-gray-200 transition-all duration-300"  onclick="navClicked = true">Education</a>
-          <a href="#certificates" class="hover:text-gray-200 transition-all duration-300 wiggle"  onclick="navClicked = true">Certificates</a>
-          <a href="#contact" class="hover:text-gray-200 transition-all duration-300"  onclick="navClicked = true">Contact Me</a>
-        </div>
-
-        <!-- Theme Toggle (navbar dark-mode) -->
-        <button id="theme-toggle" class="text-white focus:outline-none text-2xl mr-3 p-1" aria-label="Toggle navbar theme" title="Toggle theme">
-          <svg id="theme-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"></path>
-          </svg>
-        </button>
-
-        <!-- Mobile Icon -->
-        <button id="mobile-btn" class="md:hidden text-white focus:outline-none text-3xl">
-          ☰
-        </button>
-
+      <div class="brand text-white font-bold text-xl md:text-2xl neon-text animated">
+        Dipanshu.dev
       </div>
+
+      <div class="hidden md:flex space-x-6 text-white font-medium">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#education">Education</a>
+        <a class="nav-link" href="#certificates">Certificates</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </div>
+
+      <button id="theme-toggle" class="theme-switch hidden md:flex" aria-label="Toggle theme">
+        <span class="sun">☀️</span>
+        <span class="switch-knob" aria-hidden="true"></span>
+        <span class="moon">🌙</span>
+      </button>
+
+      <button id="mobile-btn" class="md:hidden text-white text-3xl">☰</button>
     </div>
+  </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden fade-in bg-white text-gray-700 font-semibold mobile-menu">
-      <a href="#home" class="block px-4 py-2 hover:bg-gray-200" onmouseover="scrollToSection('home')" onmouseout="scrollToTop()" onclick="navClicked = true">Home</a>
-      <a href="#about" class="block px-4 py-2 hover:bg-gray-200" onmouseover="scrollToSection('about')" onmouseout="scrollToTop()" onclick="navClicked = true">About Me</a>
-      <a href="#projects" class="block px-4 py-2 hover:bg-gray-200" onmouseover="scrollToSection('projects')" onmouseout="scrollToTop()" onclick="navClicked = true">My Projects</a>
-      <a href="#education" class="block px-4 py-2 hover:bg-gray-200" onmouseover="scrollToSection('education')" onmouseout="scrollToTop()" onclick="navClicked = true">Education</a>
-      <a href="#certificates" class="block px-4 py-2 hover:bg-gray-200 wiggle" onmouseover="scrollToSection('certificates')" onmouseout="scrollToTop()" onclick="navClicked = true">Certificates</a>
-      <a href="#contact" class="block px-4 py-2 hover:bg-gray-200" onmouseover="scrollToSection('contact')" onmouseout="scrollToTop()" onclick="navClicked = true">Contact Me</a>
-    </div>
-  </nav>
-  
-  <!-- HOME / HERO SECTION -->
-  <section id="home" class="section py-24 bg-white">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h1 class="text-5xl font-extrabold mb-4 text-gray-900">Hi, I'm Dipanshu</h1>
-      <p class="text-gray-700 max-w-2xl mx-auto">Front-end Developer — I build modern, responsive web experiences using React and Tailwind.</p>
-    </div>
-  </section>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden bg-white text-gray-700 font-semibold md:hidden">
+    <a href="#home" class="mobile-nav-link block px-4 py-3">Home</a>
+    <a href="#about" class="mobile-nav-link block px-4 py-3">About</a>
+    <a href="#projects" class="mobile-nav-link block px-4 py-3">Projects</a>
+    <a href="#education" class="mobile-nav-link block px-4 py-3">Education</a>
+    <a href="#certificates" class="mobile-nav-link block px-4 py-3">Certificates</a>
+    <a href="#contact" class="mobile-nav-link block px-4 py-3">Contact</a>
+  </div>
+</nav>
 
-  <script>
-    // Mobile menu toggle
-    const btn = document.getElementById("mobile-btn");
-    const menu = document.getElementById("mobile-menu");
+<!-- ================= HOME ================= -->
+  <section id="home" class="pt-24 pb-16 bg-white text-center">
+  <h1 class="text-3xl md:text-5xl font-extrabold mb-4 text-gray-900 reveal" data-reveal>
+    Hi, I'm Dipanshu
+  </h1>
+  <p class="text-gray-700 max-w-xl mx-auto reveal" data-reveal>
+    Front-end Developer building responsive and modern web experiences.
+  </p>
+  <div class="mt-6 reveal" data-reveal>
+    <a href="#contact" class="btn-cta">📧 Contact Me</a>
+    <a href="#projects" class="ml-4 btn-cta" style="background:transparent;color:#6366f1;font-weight:700;box-shadow:none;">View Projects →</a>
+  </div>
+</section>
 
-    if (btn && menu) {
-      btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-      });
-    }
-
-    // Navbar theme toggle with localStorage persistence
-    const themeBtn = document.getElementById('theme-toggle');
-    const nav = document.querySelector('nav');
-    const body = document.body;
-
-    const sunSVG = '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zM1 13h3v-2H1v2zm10-9h2V1h-2v3zm7.03 1.05l1.79-1.79-1.79-1.79-1.8 1.79 1.8 1.79zM17.24 19.16l1.8 1.79 1.79-1.79-1.79-1.8-1.8 1.8zM20 11v2h3v-2h-3zM12 7a5 5 0 100 10 5 5 0 000-10zM6.76 19.16l1.8-1.8-1.8-1.79-1.79 1.79 1.79 1.8z" fill="currentColor"></path></svg>';
-    const moonSVG = '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"></path></svg>';
-
-    function applyNavTheme(isDark) {
-      if (!nav || !themeBtn) return;
-      if (isDark) {
-        nav.classList.add('nav-dark');
-        body.classList.add('dark-mode');
-        themeBtn.innerHTML = sunSVG;
-        themeBtn.setAttribute('aria-label', 'Switch to light mode');
-      } else {
-        nav.classList.remove('nav-dark');
-        body.classList.remove('dark-mode');
-        themeBtn.innerHTML = moonSVG;
-        themeBtn.setAttribute('aria-label', 'Switch to dark mode');
-      }
-    }
-
-    // initialize from localStorage (key: navDark)
-    try {
-      const stored = localStorage.getItem('navDark');
-      const isDark = stored === 'true';
-      applyNavTheme(isDark);
-    } catch (e) {
-      applyNavTheme(false); 
-    }
-
-    if (themeBtn) {
-      themeBtn.addEventListener('click', () => {
-        const nowDark = !nav.classList.contains('nav-dark');
-        applyNavTheme(nowDark);
-        try { localStorage.setItem('navDark', nowDark); } catch (e) {}
-      });
-    }
-
-    // Auto-scroll on nav hover
-    let navClicked = false;
-
-    function scrollToSection(sectionId) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    function scrollToTop() {
-      if (!navClicked) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      navClicked = false;
-    }
-  </script>
-
- 
-      <!-- ABOUT ME SECTION -->
-<section id="about" class="py-20 bg-gray-100">
-  <div class="max-w-6xl mx-auto px-6">
-
-    <!-- Heading -->
-    <h2 class="text-4xl font-bold text-center mb-10 text-gray-800">
+<!-- ================= ABOUT ================= -->
+<section id="about" class="py-16 bg-gray-100">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl md:text-4xl font-bold text-center mb-8">
       About <span class="text-indigo-600">Me</span>
     </h2>
 
-    <!-- Card -->
-    <div class="bg-white rounded-2xl shadow-xl p-10 flex flex-col md:flex-row items-center gap-10
-                animate-[fadeIn_1s_ease-in-out] hover:shadow-2xl transition-shadow duration-300">
+    <div class="bg-white rounded-2xl shadow-md p-6 md:p-10 flex flex-col md:flex-row gap-8 items-center">
+       <img src="ME.jpg"
+         class="me-photo neon w-28 h-28 md:w-40 md:h-40 rounded-full border-4 border-white shadow-md object-cover"
+         alt="Dipanshu">
 
-      <!-- Left Side Image / Animated Circle -->
-      <div class="relative">
-        <div class="w-40 h-40 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full 
-                    animate-pulse blur-md absolute -z-10"></div>
-           <button onclick="openModal('ME.jpg')" aria-label="Open profile image" class="p-0 bg-transparent border-0 cursor-pointer focus:outline-none">
-          <img src="ME.jpg" 
-            class="w-40 h-40 rounded-full border-4 border-white shadow-xl hover:scale-105 transition-transform duration-300 transform-gpu hover:shadow-2xl" alt="Profile">
-           </button>
-      </div>
-
-      <!-- Right Side Content -->
-      <div class="md:w-2/3">
-        <h3 class="text-2xl font-bold text-gray-800 mb-4">Hi, I'm Dipanshu 👋</h3>
-
-        <p class="text-gray-700 leading-relaxed mb-6">
-          I am a passionate Front-end Developer who loves creating modern, responsive, 
-          and attractive websites. I enjoy turning ideas into real digital experiences.
-          I work with clean UI, smooth animations, and perfect responsiveness.  
+      <div>
+        <h3 class="text-xl md:text-2xl font-bold mb-3">Hi, I'm Dipanshu 👋</h3>
+        <p class="text-gray-700 mb-4">
+          Passionate Front-end Developer focused on clean UI, responsiveness,
+          and real-world performance.
         </p>
 
-        <!-- SKILLS -->
-        <h4 class="text-xl font-semibold mb-3 text-gray-800">My Skills</h4>
-
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6">
-
-          <!-- Skill Box -->
-          <div class="group flex flex-col items-center">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                 class="w-12 hover:scale-125 transition-all duration-300 transform-gpu" />
-            <p class="text-sm mt-2">HTML</p>
-          </div>
-
-          <div class="group flex flex-col items-center">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                 class="w-12 hover:scale-125 transition-all duration-300 transform-gpu" />
-            <p class="text-sm mt-2">CSS</p>
-          </div>
-
-          <div class="group flex flex-col items-center">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                 class="w-12 hover:scale-125 transition-all duration-300 transform-gpu" />
-            <p class="text-sm mt-2">JavaScript</p>
-          </div>
-
-          <div class="group flex flex-col items-center">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
-                 class="w-12 hover:scale-125 transition-all duration-300 transform-gpu" />
-            <p class="text-sm mt-2">React</p>
-          </div>
-
-          <div class="group flex flex-col items-center">
-            <img src="https://w7.pngwing.com/pngs/293/485/png-transparent-tailwind-css-hd-logo.png"
-                 class="w-12 hover:scale-125 transition-all duration-300 transform-gpu" />
-            <p class="text-sm mt-2">Tailwind</p>
-          </div>
-
-          <div class="group flex flex-col items-center">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
-                 class="w-12 hover:scale-125 transition-all duration-300 transform-gpu" />
-            <p class="text-sm mt-2">GitHub</p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
-
-
-
-<!-- PROJECTS SECTION -->
-<section id="projects" class="section py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-4xl font-bold text-center mb-10 text-gray-800">My Projects</h2>
-    <p class="text-center text-gray-600 mb-8">A selection of projects I've built using modern web technologies.</p>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="bg-gray-100 rounded-2xl p-6 shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 transform-gpu">
-        <h3 class="text-xl font-semibold text-gray-800 mb-2">Project One</h3>
-        <p class="text-gray-600">Brief description of project one.</p>
-      </div>
-      <div class="bg-gray-100 rounded-2xl p-6 shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 transform-gpu">
-        <h3 class="text-xl font-semibold text-gray-800 mb-2">Project Two</h3>
-        <p class="text-gray-600">Brief description of project two.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- EDUCATION SECTION -->
-<section id="education" class="py-20 bg-gray-50">
-  <div class="max-w-6xl mx-auto px-6">
-
-    <!-- Heading -->
-    <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">
-      My <span class="text-indigo-600">Education</span>
-    </h2>
-
-    <!-- TIMELINE -->
-    <div class="relative border-l-4 border-indigo-500 ml-4">
-
-      <!-- School 6th - 10th -->
-      <div class="mb-10 ml-6 animate-[fadeIn_1s_ease-in-out]">
-        <div class="absolute w-4 h-4 bg-indigo-500 rounded-full -left-2 border-4 border-gray-50"></div>
-        <h3 class="text-2xl font-semibold text-gray-800">BVM Kushalpura</h3>
-        <p class="text-gray-500 text-sm mb-2">Class 6th to 10th</p>
-        <p class="text-gray-600">
-          Completed my middle and secondary schooling here, building strong academic fundamentals.
-        </p>
-      </div>
-
-      <!-- School 10th - 12th -->
-      <div class="mb-10 ml-6 animate-[fadeIn_1.2s_ease-in-out]">
-        <div class="absolute w-4 h-4 bg-indigo-500 rounded-full -left-2 border-4 border-gray-50"></div>
-        <h3 class="text-2xl font-semibold text-gray-800">SSVM Nalkheda</h3>
-        <p class="text-gray-500 text-sm mb-2">Class 10th to 12th</p>
-        <p class="text-gray-600">
-          Higher secondary education with focus on Science & practical knowledge.
-        </p>
-      </div>
-
-      <!-- BTech Degree -->
-      <div class="ml-6 animate-[fadeIn_1.4s_ease-in-out]">
-        <div class="absolute w-4 h-4 bg-indigo-500 rounded-full -left-2 border-4 border-gray-50"></div>
-        <h3 class="text-2xl font-semibold text-gray-800">
-          Shri Vaishnav Vidyapeeth Vishwavidyalaya, Indore (SVVV)
-        </h3>
-        <p class="text-gray-500 text-sm mb-2">B.Tech (Computer Science Engineering) — Pursuing</p>
-        <p class="text-gray-600">
-          Currently pursuing my Bachelor's degree in CSE and gaining skills in Web Development, React, AI and competitive programming.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
-
-<!-- CERTIFICATE SECTION -->
-<section id="certificates" class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-
-    <!-- Heading -->
-    <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">
-      My <span class="text-indigo-600">Certificates</span>
-    </h2>
-
-    <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-
-      <!-- Certificate Card 1 -->
-      <div class="bg-gray-100 rounded-2xl shadow-xl p-5 hover:scale-105 transition-all duration-500 
-                  hover:shadow-2xl animate-[fadeIn_1s_ease-in-out]">
-
-        <img src="VOID.jpg" alt="certificate" 
-             onclick="openModal(this.src)"
-             class="rounded-lg shadow-md w-full h-48 object-cover mb-4 cursor-pointer">
-
-        <h3 class="text-xl font-semibold text-gray-800 mb-2">Void Hacks() 7.0</h3>
-
-        <p class="text-gray-600 text-sm leading-relaxed">
-         Participated in Void Hacks 7.0, a national-level hackathon organized by SVVV. Worked on a Mobile/Web Development project under intense time constraints, contributing to a functional prototype. This event improved my teamwork, innovation ability, time management, and full-stack development skills.
-        </p>
-      </div>
+        <a href="skills.html" class="btn-cta mt-2 inline-block reveal" data-reveal>💼 View Skills</a>
 
     
-
-  
-
-      <!-- Certificate Card 2 -->
-      <div class="bg-gray-100 rounded-2xl shadow-xl p-5 hover:scale-105 transition-all duration-500 
-                  hover:shadow-2xl animate-[fadeIn_1.2s_ease-in-out]">
-
-        <img src="RUNNERUP.jpg"
-             onclick="openModal(this.src)"
-             class="rounded-lg shadow-md w-full h-48 object-cover mb-4 cursor-pointer">
-
-        <h3 class="text-xl font-semibold text-gray-800 mb-2">Kaushal 7.0</h3>
-
-        <p class="text-gray-600 text-sm leading-relaxed">
-         Awarded Certificate of Excellence for securing the Runner-Up position and being recognized as the Best Performer in the Programming Contest at Kaushal 7.0, SVVV Indore. This recognition highlights my consistency, coding expertise, and strong competitive programming abilities.
-        </p>
-      </div>
-
-      <!-- Certificate Card 3 -->
-      <div class="bg-gray-100 rounded-2xl shadow-xl p-5 hover:scale-105 transition-all duration-500 
-                  hover:shadow-2xl animate-[fadeIn_1.4s_ease-in-out]">
-
-        <img src="KOUSHAL.jpg"
-             onclick="openModal(this.src)"
-             class="rounded-lg shadow-md w-full h-48 object-cover mb-4 cursor-pointer">
-
-        <h3 class="text-xl font-semibold text-gray-800 mb-2">Kaushal 7.0</h3>
-
-        <p class="text-gray-600 text-sm leading-relaxed">
-          Participated in the Programming Contest at Kaushal 7.0, organized by Shri Vaishnav Vidyapeeth Vishwavidyalaya (SVVV), Indore. This event provided a strong competitive environment that enhanced my logical thinking, coding speed, and problem-solving skills.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- IMAGE MODAL -->
-<div id="imgModal"
-     class="hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-md flex items-center justify-center z-50">
-  
-  <span class="absolute top-5 right-5 text-white text-4xl cursor-pointer" onclick="closeModal()">&times;</span>
-
-  <img id="modalImage" class="max-w-[90%] max-h-[85%] rounded-xl shadow-2xl animate-[fadeIn_0.5s_ease-in-out]" />
-</div>
-
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
-
-<script>
-  function openModal(src) {
-    document.getElementById('modalImage').src = src;
-    document.getElementById('imgModal').classList.remove('hidden');
-  }
-
-  function closeModal() {
-    document.getElementById('imgModal').classList.add('hidden');
-  }
-</script>
-
-<section id="contact" class="bg-white text-gray-800 py-16">
-  <div class="max-w-4xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-8">Contact Me</h2>
-
-    <div class="bg-gray-100 p-8 rounded-2xl shadow-lg">
-      <p class="text-lg mb-6 text-gray-600 text-center">
-        Feel free to reach out through any of the platforms below!
-      </p>
-
-      <div class="space-y-4 text-center">
-
-        <!-- Phone -->
-        <p class="text-gray-700">
-          📞 <span class="font-semibold">Phone:</span> +91 9753483333
-        </p>
-
-        <!-- Email -->
-        <p class="text-gray-700">
-          ✉️ <span class="font-semibold">Email:</span> farmingtips528@gmail.com
-        </p>
-
-        <!-- Instagram -->
-        <a 
-          href="https://www.instagram.com/dhfm___dipanshu?igsh=am9tMGpqbDNpNDAz"
-          target="_blank"
-          class="block text-blue-600 hover:underline"
-        >
-          📸 Instagram: https://www.instagram.com/dhfm___dipanshu?igsh=am9tMGpqbDNpNDAz
-        </a>
-
-        <!-- GitHub -->
-        <a 
-          href="https://github.com/dipanshu123321"
-          target="_blank"
-          class="block text-blue-600 hover:underline"
-        >
-          🧑‍💻 GitHub:https://github.com/dipanshu123321
-        </a>
-
-        <!-- LinkedIn -->
-        <a 
-          href="https://www.linkedin.com/in/dipanshu-patidar-035b60381?utm_source=share_via&utm_content=profile&utm_medium=member_android
-"
-          target="_blank"
-          class="block text-blue-600 hover:underline"
-        >
-          💼 LinkedIn:https://www.linkedin.com/in/dipanshu-patidar-035b60381?utm_source=share_via&utm_content=profile&utm_medium=member_android
-        </a>
-
       </div>
     </div>
   </div>
 </section>
 
-
-
-
-
-
-<!-- FOOTER -->
-<footer class="bg-gray-900 text-white py-8 mt-20">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center">
-
-    <!-- Left Section -->
-    <div>
-      <p class="text-sm text-gray-300">
-        © 2025 | Designed & Developed by 
-        <span class="text-indigo-400 font-semibold">DIPANSHU PATIDAR</span>
-      </p>
-
-      <p class="text-sm text-gray-400 mt-2">
-        📩 Email: <span class="text-indigo-300">farmingtips528@gmail.com</span>
-      </p>
-
-      <p class="text-sm text-gray-400">
-        📞 Phone: <span class="text-indigo-300">+91 9753483333</span>
-      </p>
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="py-16 bg-white">
+  <h2 class="text-2xl md:text-4xl font-bold text-center mb-8">Projects</h2>
+    <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-6">
+    <div class="bg-gray-100 p-5 rounded-xl shadow-md card-hover reveal" data-reveal>
+      <h3 class="font-semibold text-lg">Project One</h3>
+      <p class="text-gray-600 text-sm">Responsive web project.</p>
     </div>
-
-    <!-- Right Section Social Icons -->
-    <div class="flex space-x-6 mt-6 md:mt-0">
-      <a href="#" class="hover:text-indigo-400 transition-all duration-300 text-xl">
-        <i class="fa-brands fa-github"></i>
-      </a>
-
-      <a href="#" class="hover:text-indigo-400 transition-all duration-300 text-xl">
-        <i class="fa-brands fa-linkedin"></i>
-      </a>
-
-      <a href="#" class="hover:text-indigo-400 transition-all duration-300 text-xl">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
+    <div class="bg-gray-100 p-5 rounded-xl shadow-md card-hover reveal" data-reveal>
+      <h3 class="font-semibold text-lg">Project Two</h3>
+      <p class="text-gray-600 text-sm">Modern UI based project.</p>
     </div>
   </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education" class="py-16 bg-gray-50">
+  <h2 class="text-2xl md:text-4xl font-bold text-center mb-8">Education</h2>
+  <div class="max-w-4xl mx-auto px-4 space-y-6">
+    <div class="bg-white p-5 rounded-xl shadow-md">
+      <h3 class="font-semibold">B.Tech CSE – SVVV Indore</h3>
+      <p class="text-sm text-gray-600">Pursuing</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CERTIFICATES ================= -->
+<section id="certificates" class="py-16 bg-white">
+  <h2 class="text-2xl md:text-4xl font-bold text-center mb-8">Certificates</h2>
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+    <img src="VOID.jpg" class="rounded-xl shadow-md">
+    <img src="RUNNERUP.jpg" class="rounded-xl shadow-md">
+    <img src="KOUSHAL.jpg" class="rounded-xl shadow-md">
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="py-16 bg-gray-100 text-center">
+  <h2 class="text-2xl md:text-3xl font-bold mb-6">Contact Me</h2>
+  <p>📧 <a href="mailto:Farmingtips528@gmail.com" class="underline">Farmingtips528@gmail.com</a></p>
+  <p>📞 +91 9753483333</p>
+  <p class="mt-2">🔗 <a href="https://github.com/dipanshu123321" target="_blank" rel="noopener noreferrer" class="underline">github.com/dipanshu123321</a> • <a href="https://www.linkedin.com/in/dipanshu-patidar-035b60381?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="underline">LinkedIn</a></p>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-gray-900 text-white py-6 text-center">
+  <div>© 2025 | Dipanshu Patidar</div>
+  <div class="mt-2">📧 <a href="mailto:Farmingtips528@gmail.com" class="underline">Farmingtips528@gmail.com</a> • 📞 +91 9753483333</div>
 </footer>
 
-<!-- FontAwesome CDN for icons -->
-<script src="https://kit.fontawesome.com/a33e6ce5ba.js" crossorigin="anonymous"></script>
+<!-- Mobile theme toggle (visible on small screens) -->
+<button id="mobile-theme-toggle" class="mobile-theme-toggle theme-switch md:hidden" aria-label="Toggle theme">
+  <span class="sun">☀️</span>
+  <span class="switch-knob" aria-hidden="true"></span>
+  <span class="moon">🌙</span>
+</button>
+
+<script>
+  // Mobile menu toggle
+  const btn = document.getElementById("mobile-btn");
+  const menu = document.getElementById("mobile-menu");
+  btn.onclick = () => menu.classList.toggle("hidden");
+
+  // Theme handling: sync desktop and mobile toggles, persist choice
+  const nav = document.querySelector("nav");
+  const desktopToggle = document.getElementById("theme-toggle");
+  const mobileToggle = document.getElementById("mobile-theme-toggle");
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.body.classList.add('dark-mode');
+      nav.classList.add('nav-dark');
+      if (desktopToggle) desktopToggle.classList.add('is-dark');
+      if (mobileToggle) mobileToggle.classList.add('is-dark');
+      if (desktopToggle) desktopToggle.setAttribute('aria-pressed','true');
+      if (mobileToggle) mobileToggle.setAttribute('aria-pressed','true');
+    } else {
+      document.body.classList.remove('dark-mode');
+      nav.classList.remove('nav-dark');
+      if (desktopToggle) desktopToggle.classList.remove('is-dark');
+      if (mobileToggle) mobileToggle.classList.remove('is-dark');
+      if (desktopToggle) desktopToggle.setAttribute('aria-pressed','false');
+      if (mobileToggle) mobileToggle.setAttribute('aria-pressed','false');
+    }
+  }
+
+  function toggleTheme() {
+    const isDark = document.body.classList.contains('dark-mode');
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem('theme', next); } catch(e) {}
+  }
+
+  // Listen on both toggles
+  if (desktopToggle) desktopToggle.addEventListener('click', toggleTheme);
+  if (mobileToggle) mobileToggle.addEventListener('click', toggleTheme);
+
+  // Reveal on scroll using IntersectionObserver
+  (function(){
+    const obs = new IntersectionObserver((entries)=>{
+      for(const e of entries){
+        if(e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }
+      }
+    }, {threshold: 0.12});
+    document.querySelectorAll('[data-reveal]').forEach(el=>obs.observe(el));
+  })();
+
+  // small brand entrance
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const b = document.querySelector('.brand'); if(b) b.classList.add('brand-entrance');
+  });
+
+  // Initialize theme from storage or system preference
+  (function initTheme(){
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch(e) { saved = null; }
+    if (saved === 'dark' || saved === 'light') {
+      applyTheme(saved);
+      return;
+    }
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'dark' : 'light');
+  })();
+</script>
 
 </body>
 </html>
-
-
-
-
-
